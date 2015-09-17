@@ -5,7 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Gestión de Documentos - Login</title>
+        <title>Gestión de Documentos - Login</title> 
     </h:head>
     <h:body>
         
@@ -19,13 +19,12 @@
                             <p:inputText required="true" value="#{loginBean.usuario}" requiredMessage="Ingrese Usuario" placeholder="Usuario" />
                             <p:password required="true" value="#{loginBean.clave}" requiredMessage="Ingrese Clave" placeholder="Clave" />
                             
-                            <p:commandButton ajax="false" update="msge" icon="ui-icon-key" actionListener="#{loginBean.login()}" style="width: 100%" value="Iniciar Sesión" />
+                            <p:commandButton ajax="false" update="msge" class="GreenButton" icon="fa fa-lock Fs16 White" actionListener="#{loginBean.login()}" style="width: 100%" value="Iniciar Sesión" />
                             <p:commandLink onclick="PF('dialog').show()" style="font-size: 10px;" value="Olvidé mi clave" />
                         </h:panelGrid>
                     </p:fieldset>
                     </h:form>
                 </center>
-                
                 <h:form>
                     <p:confirmDialog id="dialog" widgetVar="dialog" message="Contáctese con al Administrador del Sistema y solicite una restauración de su clave">
                         <p:commandButton onclick="PF('dialog').hide()" value="Aceptar" />

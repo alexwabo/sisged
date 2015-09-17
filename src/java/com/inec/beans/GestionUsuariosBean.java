@@ -120,6 +120,7 @@ public class GestionUsuariosBean implements Serializable{
         {
             usuario.setFechaModificacion(new Date());
             usuario.setUsuarioModifica(usuariosSession);
+            
             if(new UsuarioDao().actualizar(usuario))
             {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Respuesta: ", "Datos actualizados correctamente"));
@@ -134,6 +135,7 @@ public class GestionUsuariosBean implements Serializable{
         {
             usuario.setUsuarioCrea(usuariosSession);
             usuario.setFechaCreacion(new Date());
+            usuario.setEstado("A");
             if(new UsuarioDao().guardar(usuario))
             {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Respuesta: ", "Usuario creado correctamente"));

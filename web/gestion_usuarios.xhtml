@@ -21,18 +21,15 @@
                 </h:form>
                 
                 <h:form>
-                    
-                    <br />
-                    <p:commandButton onclick="PF('dlgDatos').show()" value="Nuevo Usuario" icon="ui-icon-plus" />
-                    <br />
-                    
+                                     
                     <p:dataTable 
                         paginator="true"
                         emptyMessage="No existen registros"
                         value="#{gestionUsuariosBean.listaUsuarios}" var="usuario">
                         
-                        <f:facet name="header">
+                        <f:facet class="Fs9" name="header">
                             Usuarios Registrados
+                            <p:commandButton class="CyanButton" onclick="PF('dlgDatos').show()" icon="ui-icon-plus" />
                         </f:facet> 
                         
                         <p:column width="5%" headerText="Editar">
@@ -68,9 +65,9 @@
                 </h:form>
                 
                 <h:form id="frmDatos">
-                    <p:dialog modal="true" widgetVar="dlgDatos" id="dlgDatos" header="Datos de Usuario">
+                    <p:dialog modal="true" class="Fs14" widgetVar="dlgDatos" id="dlgDatos" header="Datos de Usuario">
                         
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="2" cellpadding="5">
                             
                             <p:outputLabel value="Usuario" />
                             <p:inputText value="#{gestionUsuariosBean.usuario.apellidos}" />
@@ -81,24 +78,24 @@
                             <p:outputLabel value="Nombres" />
                             <p:inputText value="#{gestionUsuariosBean.usuario.nombres}" />
                             
-                            <h:outputLabel value="Area" />
+                            <p:outputLabel value="Area" />
                             <p:inputText widgetVar="txtArea" id="txtArea" style="width: 350px" readonly="true" value="#{gestionUsuariosBean.usuario.iddepartamento.idarea.nombre}" />
                             
-                            <h:outputLabel value="Departamento" />
+                            <p:outputLabel value="Departamento" />
                             <h:panelGrid columns="2">
                                 <p:inputText widgetVar="txtDep" id="txtDep" readonly="true" style="width: 350px" value="#{gestionUsuariosBean.usuario.iddepartamento.nombre}" />
                                 <p:commandButton icon="ui-icon-search" onclick="PF('dlgDeps').show()" />
                             </h:panelGrid>
              
-                            <h:outputLabel value="Clave" />
+                            <p:outputLabel value="Clave" />
                             <p:password value="#{gestionUsuariosBean.usuario.password}" />
                             
-                            <h:outputLabel value="Confirme" />
+                            <p:outputLabel value="Confirme" />
                             <p:password value="#{gestionUsuariosBean.claveAux}" />
                         </h:panelGrid>
                         
                         <center>
-                            <p:commandButton oncomplete="PF('dlgDatos').hide()" ajax="false" update="msge" actionListener="#{gestionUsuariosBean.guardarUsuario()}" value="Guardar" icon="ui-icon-disk" />
+                            <p:commandButton oncomplete="PF('dlgDatos').hide()" ajax="false" update="msge" actionListener="#{gestionUsuariosBean.guardarUsuario()}" value="Guardar" icon="fa fa-check" />
                         </center>
                         
                     </p:dialog>
@@ -118,7 +115,7 @@
                     </h:panelGrid>
                     
                     
-                    <p:dataTable paginator="true" id="tblDeps" widgetVar="tblDeps" value="#{perfilBean.listaDepartamentos}" var="dep">
+                    <p:dataTable paginator="true" id="tblDeps" widgetVar="tblDeps" value="#{gestionUsuariosBean.listaDepartamentos}" var="dep">
                         <p:column headerText="Departamento">
                             <p:outputLabel value="#{dep.nombre}" />
                         </p:column>
@@ -128,7 +125,7 @@
                         </p:column>
                         
                         <p:column headerText="Selección" width="15%">
-                            <p:commandButton update=":frmDatos:txtDep, :frmDatos:txtArea" icon="ui-icon-check" actionListener="#{perfilBean.seleccionDepartamento(dep)}" oncomplete="PF('dlgDeps').hide()" />
+                            <p:commandButton update=":frmDatos:txtDep,:frmDatos:txtArea" icon="ui-icon-check" actionListener="#{gestionUsuariosBean.estableceDepartamento(dep)}" oncomplete="PF('dlgDeps').hide()" />
                         </p:column>
                     </p:dataTable> 
                     

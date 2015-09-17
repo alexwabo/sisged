@@ -7,7 +7,17 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Inec -  Gestión de Documentos</title>
-        <link rel="shortcut icon" type="image/x-icon" href="#{resource['imagenes/favicon.ico']}"/> 
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['imagenes/favicon.ico']}"/>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Gestión de Documentos - Administrar Usuarios</title>
+        <h:outputScript name="js/ripple-effect.js" library="modena-layout" />
+        <h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
+        <h:outputScript name="js/layout.js" library="modena-layout" />
         <h:outputStylesheet library="page/css" name="page.css" />
     </h:head>
     <h:body style="font-size: 12px;min-width: 800px;">
@@ -32,15 +42,15 @@
                         </table>
                     </div>
                     
-                    <div style="margin-top: 15px; padding-top: 5px;padding-bottom: 5px; background-color: #00aca2;text-align: center;font-size: 23px;font-family: sans-serif;color: whitesmoke">
+                    <div style="padding-bottom: 5px; background-color: #00aca2;text-align: center;font-size: 23px;font-family: sans-serif;color: whitesmoke">
                        Sistema de gestión de Documentos de Estadística Vital y de Salud     
                     </div>
                     <h:form>
                     <p:toolbar rendered="#{sessionBean.mostrarMenu}">
                         <p:toolbarGroup align="right">                        
-                            <p:outputLabel value="#{sessionBean.usuario.nombres} #{sessionBean.usuario.apellidos}" />
+                            <p:outputLabel style="font-size: 11px" value="#{sessionBean.usuario.nombres} #{sessionBean.usuario.apellidos}" />
                                 <p:separator />
-                            <p:outputLabel value="#{sessionBean.usuario.idrol.nombre}" />
+                            <p:outputLabel style="font-size: 11px" value="#{sessionBean.usuario.idrol.nombre}" />
                         </p:toolbarGroup>
                     </p:toolbar>
                     <p:menubar rendered="#{sessionBean.mostrarMenu}">
@@ -64,6 +74,23 @@
                 </td>
             </tr>
         </table>
+        
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <p:graphicImage name="images/preloader.gif" library="modena-layout"/>
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+        
+        <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
+        <h:outputStylesheet name="css/animate.css" library="modena-layout" />
+        <h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
+        <h:outputStylesheet name="css/ripple-effect.css" library="modena-layout" />
+        <h:outputStylesheet name="css/perfect-scrollbar.css" library="modena-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
+        <h:outputStylesheet name="css/modena-layout.css" library="modena-layout" />
         
     </h:body>
 </html>
