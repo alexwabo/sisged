@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Inec -  Gestión de Documentos</title>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['imagenes/favicon.ico']}"/> 
+        <h:outputStylesheet library="page/css" name="page.css" />
+    </h:head>
+    <h:body style="font-size: 12px;min-width: 800px;">
+        <div class="ecuador-iso"></div>
+        
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 10%">
+                    
+                </td>
+                <td>
+                    <div style="width: 100%;">
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50%;text-align: center">
+                                    <img src="#{request.contextPath}/resources/imagenes/ama-vida-tipo.png" />
+                                </td>
+                                <td style="width: 50%;text-align: right">
+                                    <img src="#{request.contextPath}/resources/imagenes/banner-INEC.png" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-top: 15px; padding-top: 5px;padding-bottom: 5px; background-color: #00aca2;text-align: center;font-size: 23px;font-family: sans-serif;color: whitesmoke">
+                       Sistema de gestión de Documentos de Estadística Vital y de Salud     
+                    </div>
+                    <h:form>
+                    <p:toolbar rendered="#{sessionBean.mostrarMenu}">
+                        <p:toolbarGroup align="right">                        
+                            <p:outputLabel value="#{sessionBean.usuario.nombres} #{sessionBean.usuario.apellidos}" />
+                                <p:separator />
+                            <p:outputLabel value="#{sessionBean.usuario.idrol.nombre}" />
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                    <p:menubar rendered="#{sessionBean.mostrarMenu}">
+                        <p:submenu label="Sistema" icon="ui-icon-document">
+                            <p:menuitem icon="ui-icon-plus" ajax="false" url="perfil.xhtml" value="Perfil de Usuario" />
+                            <p:menuitem icon="ui-icon-gear" ajax="false" url="gestion_usuarios.xhtml" value="Gestión de Usuarios" />
+                            <p:menuitem icon="ui-icon-tag" ajax="false" value="Perfiles y Roles" />
+                            <p:menuitem icon="ui-icon-close" ajax="false" value="Cerrar Sesión" actionListener="#{sessionBean.cerrarSesion()}" />
+                        </p:submenu>
+                    </p:menubar>                
+                    </h:form>
+                    
+                    <div style="width: 100%;">
+                                <ui:insert name="content">
+                        
+                                </ui:insert>
+                    </div>
+                </td>
+                <td style="width: 10%">
+                    
+                </td>
+            </tr>
+        </table>
+        
+    </h:body>
+</html>
+

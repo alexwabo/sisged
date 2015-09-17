@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Gestión de Documentos - Administrar Usuarios</title>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="/index.xhtml">
+            <ui:define name="content">
+                
+                <h:form>
+                <center>
+                    <p:messages id="msge" showDetail="true" autoUpdate="true" closable="true" style="width: 300px;" />
+                </center>
+                </h:form>
+                
+                <h:form>
+                    
+                    <br />
+                    <p:commandButton onclick="PF('dlgDatos').show()" value="Nuevo Usuario" icon="ui-icon-plus" />
+                    <br />
+                    
+                    <p:dataTable 
+                        paginator="true"
+                        emptyMessage="No existen registros"
+                        value="#{gestionUsuariosBean.listaUsuarios}" var="usuario">
+                        
+                        <f:facet name="header">
+                            Usuarios Registrados
+                        </f:facet> 
+                        
+                        <p:column width="5%" headerText="Editar">
+                            <p:commandButton icon="ui-icon-search" oncomplete="PF('dlgDatos').show()" actionListener="#{gestionUsuariosBean.estableceUsuario(usr)}" />
+                        </p:column>
+                        
+                        <p:column headerText="Apellidos">
+                            <p:outputLabel value="#{usuario.apellidos}" />
+                        </p:column>
+                        
+                        <p:column headerText="Nombres">
+                            <p:outputLabel value="#{usuario.nombres}" />
+                        </p:column>
+                        
+                        <p:column headerText="Usuario">
+                            <p:outputLabel value="#{usuario.identificador}" />
+                        </p:column>
+                        
+                        <p:column headerText="Departamento">
+                            <p:outputLabel value="#{usuario.iddepartamento.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Area">
+                            <p:outputLabel value="#{usuario.iddepartamento.idarea.nombre}" />
+                        </p:column>
+                        
+                        <p:column width="8%" style="text-align: center" headerText="Estado">
+                            <p:outputLabel style="font-weight: bold;color: #00aca2;" rendered="#{usuario.estado.matches('A')}" value="ACTIVO" />
+                            <p:outputLabel style="font-weight: bold;color: tomato;" rendered="#{!usuario.estado.matches('A')}" value="INACTIVO" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                </h:form>
+                
+                <h:form id="frmDatos">
+                    <p:dialog modal="true" widgetVar="dlgDatos" id="dlgDatos" header="Datos de Usuario">
+                        
+                        <h:panelGrid columns="2">
+                            
+                            <p:outputLabel value="Usuario" />
+                            <p:inputText value="#{gestionUsuariosBean.usuario.apellidos}" />
+                            
+                            <p:outputLabel value="Apellidos" />
+                            <p:inputText value="#{gestionUsuariosBean.usuario.apellidos}" />
+                            
+                            <p:outputLabel value="Nombres" />
+                            <p:inputText value="#{gestionUsuariosBean.usuario.nombres}" />
+                            
+                            <h:outputLabel value="Area" />
+                            <p:inputText widgetVar="txtArea" id="txtArea" style="width: 350px" readonly="true" value="#{gestionUsuariosBean.usuario.iddepartamento.idarea.nombre}" />
+                            
+                            <h:outputLabel value="Departamento" />
+                            <h:panelGrid columns="2">
+                                <p:inputText widgetVar="txtDep" id="txtDep" readonly="true" style="width: 350px" value="#{gestionUsuariosBean.usuario.iddepartamento.nombre}" />
+                                <p:commandButton icon="ui-icon-search" onclick="PF('dlgDeps').show()" />
+                            </h:panelGrid>
+             
+                            <h:outputLabel value="Clave" />
+                            <p:password value="#{gestionUsuariosBean.usuario.password}" />
+                            
+                            <h:outputLabel value="Confirme" />
+                            <p:password value="#{gestionUsuariosBean.claveAux}" />
+                        </h:panelGrid>
+                        
+                        <center>
+                            <p:commandButton oncomplete="PF('dlgDatos').hide()" ajax="false" update="msge" actionListener="#{gestionUsuariosBean.guardarUsuario()}" value="Guardar" icon="ui-icon-disk" />
+                        </center>
+                        
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmAreas">
+                    <p:dialog widgetVar="dlgDeps" modal="true" closeOnEscape="true" width="850" header="Selección de Departamento">
+                    
+                    <br />
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Seleccione Area:" />
+                        <p:selectOneMenu widgetVar="cmbAreas" value="#{gestionUsuariosBean.area.idarea}">
+                            <f:selectItems value="#{gestionUsuariosBean.listaArea}" var="area" itemLabel="#{area.nombre}" itemValue="#{area.idarea}" />
+                            <p:ajax event="change" update=":frmAreas:tblDeps" listener="#{gestionUsuariosBean.listarDepartamentos()}" />
+                        </p:selectOneMenu>
+                        <br />
+                    </h:panelGrid>
+                    
+                    
+                    <p:dataTable paginator="true" id="tblDeps" widgetVar="tblDeps" value="#{perfilBean.listaDepartamentos}" var="dep">
+                        <p:column headerText="Departamento">
+                            <p:outputLabel value="#{dep.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Area">
+                            <p:outputLabel value="#{dep.idarea.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Selección" width="15%">
+                            <p:commandButton update=":frmDatos:txtDep, :frmDatos:txtArea" icon="ui-icon-check" actionListener="#{perfilBean.seleccionDepartamento(dep)}" oncomplete="PF('dlgDeps').hide()" />
+                        </p:column>
+                    </p:dataTable> 
+                    
+                </p:dialog>
+                </h:form>
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

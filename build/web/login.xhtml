@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Gestión de Documentos - Login</title>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="/index.xhtml">
+            <ui:define name="content">
+                <center style="margin-top: 100px;">
+                    <h:form>
+                        <p:messages id="msge" showDetail="true" autoUpdate="true" closable="true" style="width: 300px;" />
+                    <p:fieldset style="width: 300px;" legend="Ingreso al Sistema">
+                        <h:panelGrid columns="1">
+                            <p:inputText required="true" value="#{loginBean.usuario}" requiredMessage="Ingrese Usuario" placeholder="Usuario" />
+                            <p:password required="true" value="#{loginBean.clave}" requiredMessage="Ingrese Clave" placeholder="Clave" />
+                            
+                            <p:commandButton ajax="false" update="msge" icon="ui-icon-key" actionListener="#{loginBean.login()}" style="width: 100%" value="Iniciar Sesión" />
+                            <p:commandLink onclick="PF('dialog').show()" style="font-size: 10px;" value="Olvidé mi clave" />
+                        </h:panelGrid>
+                    </p:fieldset>
+                    </h:form>
+                </center>
+                
+                <h:form>
+                    <p:confirmDialog id="dialog" widgetVar="dialog" message="Contáctese con al Administrador del Sistema y solicite una restauración de su clave">
+                        <p:commandButton onclick="PF('dialog').hide()" value="Aceptar" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

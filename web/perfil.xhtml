@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Gestión de Documentos - Perfil de Usuario</title>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="/index.xhtml">
+            <ui:define name="content">
+                
+                <h:form>
+                <center>
+                    <p:messages id="msge" showDetail="true" autoUpdate="true" closable="true" style="width: 300px;" />
+                </center>
+                </h:form>
+                
+                <center>
+                    
+                    <p:fieldset style="width: 450px;margin-top: 5px;">
+                        
+                        <h3>Datos de Usuario</h3>
+                        <h:form id="frmDatos">
+                            
+                        <h:panelGrid columns="2">
+                            
+                            <h:outputLabel value="Usuario" />
+                            <p:inputText readonly="true" value="#{perfilBean.usuario.identificador}" />
+                            
+                            <h:outputLabel value="Nombres" />
+                            <p:inputText required="true" requiredMessage="Ingrese Nombre" style="width: 350px;text-transform: uppercase;" value="#{perfilBean.usuario.nombres}" />
+                            
+                            <h:outputLabel value="Apellidos" />
+                            <p:inputText required="true" requiredMessage="Ingrese Apellidos" style="width: 350px;text-transform: uppercase;" value="#{perfilBean.usuario.apellidos}" />
+                            
+                            <h:outputLabel value="Area" />
+                            <p:inputText widgetVar="txtArea" id="txtArea" style="width: 350px" readonly="true" value="#{perfilBean.usuario.iddepartamento.idarea.nombre}" />
+                            
+                            <h:outputLabel value="Departamento" />
+                            <h:panelGrid columns="2">
+                                <p:inputText widgetVar="txtDep" id="txtDep" readonly="true" style="width: 350px" value="#{perfilBean.usuario.iddepartamento.nombre}" />
+                                <p:commandButton icon="ui-icon-search" onclick="PF('dlgDeps').show()" />
+                            </h:panelGrid>
+                            
+                            <h:outputLabel value="Clave anterior" />
+                            <p:password value="#{perfilBean.claveActual}" />
+                            
+                            <h:outputLabel value="Nueva clave" />
+                            <p:password value="#{perfilBean.nuevaClave}" />
+                            
+                            <h:outputLabel value="Confirme" />
+                            <p:password value="#{perfilBean.auxClave}" />
+                            
+                        </h:panelGrid>
+                        
+                        <br />
+                        <p:commandButton style="width: 200px;" actionListener="#{perfilBean.actualizar()}" update="msge" value="Guardar" ajax="false" icon="ui-icon-disk" />
+                        </h:form>
+                    </p:fieldset>
+                </center>
+                
+                <h:form id="frmAreas">
+                    <p:dialog widgetVar="dlgDeps" modal="true" closeOnEscape="true" width="850" header="Selección de Departamento">
+                    
+                    <br />
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Seleccione Area:" />
+                        <p:selectOneMenu widgetVar="cmbAreas" value="#{perfilBean.area.idarea}">
+                            <f:selectItems value="#{perfilBean.listaArea}" var="area" itemLabel="#{area.nombre}" itemValue="#{area.idarea}" />
+                            <p:ajax event="change" update=":frmAreas:tblDeps" listener="#{perfilBean.listarDepartamentos()}" />
+                        </p:selectOneMenu>
+                        <br />
+                    </h:panelGrid>
+                    
+                    
+                    <p:dataTable paginator="true" id="tblDeps" widgetVar="tblDeps" value="#{perfilBean.listaDepartamentos}" var="dep">
+                        <p:column headerText="Departamento">
+                            <p:outputLabel value="#{dep.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Area">
+                            <p:outputLabel value="#{dep.idarea.nombre}" />
+                        </p:column>
+                        
+                        <p:column headerText="Selección" width="15%">
+                            <p:commandButton update=":frmDatos:txtDep, :frmDatos:txtArea" icon="ui-icon-check" actionListener="#{perfilBean.seleccionDepartamento(dep)}" oncomplete="PF('dlgDeps').hide()" />
+                        </p:column>
+                    </p:dataTable> 
+                    
+                </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
